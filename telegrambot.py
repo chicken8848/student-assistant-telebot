@@ -5,7 +5,7 @@ import logging
 import json
 
 # Telegram bot token
-TELEGRAM_TOKEN = '7388414330:AAHHXGVemSpA8DKAcxmvsEzhz1dUgQVCKQY'
+TELEGRAM_TOKEN = open('.teletoken', 'r').readline().rstrip()
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 # RAGFlow API configuration
