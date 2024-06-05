@@ -1,0 +1,4 @@
+.botenv
+__pycache__
+.chatapi
+.env
