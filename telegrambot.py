@@ -49,14 +49,15 @@ def query_ragflow(question: str, user: str) -> str:
     }
     data = {
             'conversation_id': user_ids[user.first_name],
-            'messages': messages
+            'messages': [messages],
+            'stream': False
             }
     print(data)
     try:
-        response = requests.post(f"{RAGFLOW_API_URL}/completion", headers=headers, json=data)
+        response = requests.post(f"{RAGFLOW_API_URL}completion", headers=headers, json=data)
         response.raise_for_status()
         print(response.json())
-        return response.json().get('answer', 'No answer found')
+        return response.json().get('data', 'No answer found')['answer']
     except requests.exceptions.RequestException as e:
         logger.error(f"RAGFlow API error: {e}")
         return 'Error querying RAGFlow'
