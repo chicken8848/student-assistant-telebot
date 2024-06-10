@@ -4,6 +4,7 @@ import requests
 import logging
 import json
 import re
+import time
 
 # Telegram bot token
 TELEGRAM_TOKEN = open('.teletoken', 'r').readline().rstrip()
@@ -32,7 +33,7 @@ def escape_elasticsearch_query(query):
     return output
 
 def escape_markdown(text):
-    output = re.sub(r'(?<![\*\\])\*(?!\*)', r'-', text)
+    output = re.sub(r'(?<![\*\\])\*(?!\*)', r'', text)
     return output
 
 
@@ -84,4 +85,10 @@ def main():
     bot.polling()
 
 if __name__ == '__main__':
-    main()
+    while True:
+        try:
+            main()
+        except Exception as e:
+            logger.error(f"Bot crashed with error: {e}")
+            time.sleep(5)  # Wait for a few seconds before restarting
+            logger.info("Restarting bot...")
