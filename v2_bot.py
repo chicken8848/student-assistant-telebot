@@ -96,7 +96,7 @@ async def query_ragflow(question: str, user) -> str:
 
 def main():
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(TELEGRAM_TOKEN).build()
+    application = Application.builder().read_timeout(30).token(TELEGRAM_TOKEN).build()
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
