@@ -83,7 +83,7 @@ async def query_ragflow(question: str, user) -> str:
             }
     print(data)
     try:
-        async with httpx.AsyncClient(timeout=None) as client:
+        async with httpx.AsyncClient(timeout=10) as client:
             response = await client.post(f"{RAGFLOW_API_URL}completion", headers=headers, json=data, timeout=30.0)
             response.raise_for_status()
             print(response.json())
@@ -96,7 +96,7 @@ async def query_ragflow(question: str, user) -> str:
 
 def main():
     # Create the Application and pass it your bot's token.
-    application = Application.builder().read_timeout(30).token(TELEGRAM_TOKEN).build()
+    application = Application.builder().read_timeout(30).connect_timeout(30).token(TELEGRAM_TOKEN).build()
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
