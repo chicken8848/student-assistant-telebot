@@ -45,7 +45,7 @@ async def start(update: Update, context: CallbackContext) -> int:
     res = create_conversation(user.first_name)
     session_id = res["data"]["id"]
     user_ids[user.first_name] = session_id
-    first_message = "Hi\\! Send me a question, and I will try to answer to the best of my *knowledge*\\. \n\nCreator: @Eelauhsoj"
+    first_message = "Hi\\! Send me a question, and I will try to answer to the best of my knowledge bases\\. \n\nCreator: @Eelauhsoj"
     await update.message.reply_text(first_message, parse_mode=ParseMode.MARKDOWN_V2)
     return TALK
 
@@ -53,10 +53,9 @@ async def handle_message(update: Update, context: CallbackContext) -> int:
     user = update.effective_user
     question = update.message.text
     response = await query_ragflow(escape_elasticsearch_query(question), user)
-    print(response)
     await update.message.reply_text(telegramify_markdown.markdownify(response), parse_mode=ParseMode.MARKDOWN_V2)
     return TALK
-    
+        
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
